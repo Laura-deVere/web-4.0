@@ -1,8 +1,32 @@
 window.onload = () => {
-    init();
+    const ui = init();
+    ui.initTypeWriter();
+    ui.initCarousel();
 }
 
 function init() {
+
+    const initTypeWriter = () => {
+        let i = 0;
+        let txt = "Hello, I'm Laura";
+        let speed = 60;
+        const header = document.getElementById('banner-header');
+        const typeWriter = () => {
+
+            if (i < txt.length + 3) {
+                if (i === 6) {
+                    header.innerHTML += '<br>';
+                    i++
+                } else {
+                    header.innerHTML += txt.charAt(i);
+                    i++;
+                }
+                setTimeout(typeWriter, speed);
+            }
+        }
+        return typeWriter();
+    }
+
     const imagesList = [
         {
             src: 'weatherly.png',
@@ -39,8 +63,8 @@ function init() {
             const text = document.createElement('p');
 
             carousel.appendChild(listItem);
-            listItem.appendChild(image);
             listItem.appendChild(anchorTag);
+            listItem.appendChild(image);
             anchorTag.appendChild(text);
 
             listItem.classList.add('slick-list-item');
@@ -72,7 +96,7 @@ function init() {
                 {
                     breakpoint: 600,
                     settings: {
-                        slidesToShow: 3,
+                        slidesToShow: 2,
                         slidesToScroll: 1,
                     }
                 },
@@ -81,12 +105,16 @@ function init() {
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
+                        dots: true
                     }
                 }
             ]
         });
     }
 
-    initCarousel();
-
+    const public = {
+        initCarousel,
+        initTypeWriter
+    }
+    return public;
 };
